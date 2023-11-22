@@ -6,11 +6,18 @@ from fastapi.templating import Jinja2Templates
 import base64
 import json
 
-class Conents(BaseModel):
-    befoe_request: json
-    uid: int
-    after_request: json
+def chatgpt(key: str, prompt: str):
+    from openai import OpenAI
+    client = OpenAI(api_key=key)
 
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt},
+                ]
+        )
+    return response
 
 app = FastAPI()
 
@@ -20,11 +27,6 @@ webui_path = "contents/webui"
 app.mount(f"/{webui_path}/static", StaticFiles(directory=f"{webui_path}/static"), name="static")
 templates = Jinja2Templates(directory=f"{webui_path}/template")
 
-@app.middleware("http")
-async def base64_conversion(request: Request, next_prosess):
-    print(request.query_params.count('content'))
-    response = await next_prosess(request)
-    return response
 
 @app.get('/api', response_class=JSONResponse)
 async def generator_API(requset: Request):
@@ -32,8 +34,8 @@ async def generator_API(requset: Request):
     return 
 
 @app.get('/', response_class=HTMLResponse)
-async def root(request: Request, uid: int | None):
-    return templates.TemplateResponse('index.html', {"request": request, "uid": uid})
+async def root(request: Request, pompt: str | None):
+    return templates.TemplateResponse('index.html', {"request": request, "client_ip": request.client.host})
 
 
 
