@@ -13,7 +13,7 @@ app.include_router(api.router)
 
 
 app.mount(f"/{config.webui_path}/static", StaticFiles(directory=f"{config.webui_path}/static"), name="static")
-
+templates = Jinja2Templates(directory=f"{config.webui_path}/template")
 
 
 
