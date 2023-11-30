@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta lang="ko" charset="UTF-8">
+    <title>나만의 닉네임</title>
+    <link href={{ url_for('static', path='/main.css' ) }} rel="stylesheet">
+    <script src={{ url_for('static', path='/main.js' ) }}></script>
+</head>
+
+<body>
+    <header class="header" id="main">
+        <h1 class="header" id="title">나만의 닉네임</h1>
+    </header>
+    <article>
+
+        <div class="chat" id="main">
+            <ul class="chat">
+                <ol class="chat" id="assistant">
+                    <dir class="box" id="output">
+                        {{ assistant_prompt }}
+                    </dir>
+                </ol>
+                <ol class="chat" id="user">
+                    <dir class="box" id="input">
+                        <input type="text" id="user_prompt" placeholder="원하는 조건을 상세히 작성해주세요.">
+                        <button class="send" onclick="generateNickname()">Send</button>
+                    </dir>
+                    <div id="status"></div>
+                </ol>
+            </ul>
+        </div>
+        </div>
+        <footer>
+            <div class="docs">
+                <a href="/docs">
+                    <h4 class="docs">AboutSite</h4>
+                </a>
+            </div>
+            <div class="share">
+                <h4 class="Share">Share</h4>
+            </div>
+        </footer>
+</body>
+
+</html>
