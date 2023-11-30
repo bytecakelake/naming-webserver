@@ -12,45 +12,54 @@ router = APIRouter(prefix="/api", default_response_class=JSONResponse, tags=["ap
 openai = OpenAI(api_key=config.openai_api_key)
 
 class Logs:
-    generated = pd.DataFrame(columns=["id", 'user_prompt', 'nickname', 'explanation'], dtype=np.dtype('<U'))
+    generated = pd.DataFrame(columns=['prompt', 'nickname', 'explanation'], dtype=np.dtype('<U'))
 
-@router.get('/openai/test')
+
 async def nickname_generator(user_prompt: str):
     response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo-0613",
         messages=[
             {"role": "system", "content": config.sysetem_prompt},
             { "role": "assistant","content": config.assistant_prompt},
             {"role": "user",  "content": user_prompt},
         ],
-        temperature=1.5,
+        temperature=1.2,
         max_tokens=config.ans_limit,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
     )
-    print(response)
-    return response
+    content = response.choices[0].message.content.replace("\n\n", "\n").replace(": ", ":").split("\n")
+    if len(content) != 2:
+        print(" 비정상적인 생성기 응답감지. 다시 시도를 권장합니다.")
+        print(content)
+        return Response(status_code=500)
+    nickname = content[1].split(":")[-1]
+    if "(" in nickname and ")" in nickname:
+        print("닉네임에 부가설명이 감지되어 제거하였습니다.")
+        nickname = nickname.split("(")[0]
+    explanation = content[0].split(":")[1]
+    return {"nickname": nickname, "explanation": explanation}
 
-@router.get('/generate')
-async def generate(request: Request, user_prompt: str, none_preprossing: bool = False):
-    #아무것도 입력하지 않았을 경우
-    if user_prompt == "":
-        return Response(status_code=400)
-    #response = nickname_generator(user_prompt)
-
-    nickname = "abc님"
-    explanation = "당신의 이름입니다."
-    uuid = uuid1()
-    Logs.generated.loc[len(Logs.generated)+1] = [uuid, user_prompt, nickname, explanation]
-    return {"uuid": uuid, "nickname": nickname, "explanation": explanation}
+@router.get('/generate', status_code=202)
+async def generator_gate(request: Request, mode: str, prompt: str):
     
+    if prompt == "":
+        return Response(status_code=400)
+    if mode == "nickname":
+        content = await nickname_generator(prompt)
+        #content = {"nickname": "테스트", "explanation": "테스트"}
+
+        uuid = uuid1()
+        Logs.generated.loc[uuid] = {"nickname": content["nickname"], "explanation": content["explanation"], "prompt": prompt}
+        return {"uuid": uuid, "nickname": content["nickname"], "explanation": content["explanation"]}
+    return Response(status_code=400)
 
 @router.get('/search')
-async def search(request: Request, id: UUID,):
-    response = Logs.generated.loc[Logs.generated['id'] == id]
-    if len(response) == 0:
+async def search(request: Request, uuid: UUID,):
+    try:
+        return Logs.generated.loc[uuid]
+    except KeyError:
         return Response(status_code=404)
-    else:
-        return response.iloc[0]
+
    

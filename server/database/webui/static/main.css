@@ -58,7 +58,7 @@ body {
     background-color: rgb(115, 255, 0);
 }
 
-#user #status {
+.chat #status {
     display: none;
 }
 
