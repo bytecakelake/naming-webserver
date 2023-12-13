@@ -1,0 +1,3 @@
+[submodule "server/core"]
+	path = server/core
+	url = https://github.com/bytecakelake/creative-profile-maker.git
