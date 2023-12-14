@@ -1,92 +1,112 @@
 @font-face {
-    font-family: 'SBAggroB';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'PyeongChangPeace-Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'PyeongChangPeace-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Light.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
+a {
+    text-decoration: none;
+}
 
 body {
-    margin: 0px 0px 0px 0px;
+    position: fixed;
+}
+
+header {
+    width: 100vw;
+    height: 13vh;
+    background-color: #000000;
+}
+
+article {
+    width: 100vw;
+    height: 87vh;
     background-color: #ffffff;
 }
 
-#main.header {
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    height: 5rem;
-    margin: 0px;
-    padding: 0 0 0 0;
-    background-color: #000000;
-    z-index: 10;
+footer {
+    display: none;
 }
 
-#title.header {
-    position: static;
+h1.logo {
+    padding-top: 1vh;
+    width: 100%;
+    height: 100%;
     font-family: 'PyeongChangPeace-Bold';
     color: #ffffff;
-    font-size: 3.7rem;
-    margin: auto 0 auto 0.7em;
-    white-space: nowrap;
+    font-size: 16vw;
+    text-align: center;
 }
 
-#main.chat {
-    position: relative;
+.container {
     width: 100%;
-    top: 8rem;
+    height: 100%;
 }
 
-.chat .box {
-    position: relative;
-    width: 20rem;
-    height: 3rem;
-    background-color: rgb(115, 255, 0);
+
+#result {
+    padding-top: 2vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    width: 100vw;
+    height: 60vh;
+    font-size: 5vw;
 }
 
-.chat #status {
-    display: none;
+#name {
+
+    width: 100vw;
+    font-size: 10vw;
 }
 
-#assistant #ans {
-    display: none;
+#description {
+    width: 100vw;
+    font-size: 8vw;
 }
 
-div.docs {
+#send {
+    padding-top: 10vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    width: 98vw;
+    height: 15vh;
+    bottom: 0;
+}
+
+#input {
     display: inline;
-    position: fixed;
-    right: 0px;
-    bottom: 0px;
-    height: 3rem;
-    width: 100%;
-    background-color: #000000;
-
-    margin: 0px 0px 0px 0px;
+    width: 80vw;
+    height: 7vh;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 4vw;
+    padding-left: 1vw;
 }
 
-
-
-footer h4 {
-    color: #ffffff;
+#button {
+    display: inline;
+    width: 14vw;
+    height: 7vh;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 4vw;
+    background-color: #ffffff;
 }
 
-
-a {
-    color: #ffffff;
-    font-size: 16px;
-    text-decoration: none;
+#status {
+    font-weight: bold;
+    margin-left: 2vw;
+    padding: 0.5vh 4vw 0.5vh 4vw;
+    width: 68vw;
+    font-size: 3vw;
+    color: #000000;
+    border-radius: 0 0 3px 3px;
+    background-color: #858585;
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width">
+    <title>나만의 닉네임</title>
+    <link href={{ url_for('static', path='/main.css' ) }} rel="stylesheet">
+    <script src={{ url_for('static', path='/main.js' ) }}></script>
+</head>
+
+<body>
+    <header>
+        <a href="/">
+            <h1 class="logo">나만의 닉네임</h1>
+        </a>
+    </header>
+    <article>
+        <div class="content" id="result">
+            <h2 class="content" id="name">닉네임</h2>
+            <p class="content" id="description">설명</p>
+        </div>
+        <div width="100%" height="5px" background-color="black"></div>
+        <div class="content" id="send">
+            <p class="content">
+                <input type="text" class="content" id="input" placeholder="원하는 조건을 상세히 작성해주세요.">
+                <button class="content" id="button" onclick="naming()">Send</button>
+            </p>
+            <p class="content" id="status">닉네임생성 대기중...</p>
+        </div>
+    </article>
+    <footer>
+        <a href="/docs">
+            <h4 class="docs">AboutSite</h4>
+        </a>
+        <a href="/docs">
+
+            <h4 class="docs">Share</h4>
+        </a>
+    </footer>
+</body>
+
+</html>
