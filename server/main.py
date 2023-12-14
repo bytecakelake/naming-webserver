@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from router import api
 from common import config
+from uuid import UUID, uuid4
 import httpx
 
 
@@ -18,18 +19,15 @@ app.include_router(api.router)
 
 # jinja2 템플릿 세팅
 app.mount(f"/{config.webui_path}/static", StaticFiles(directory=f"{config.webui_path}/static"), name="static")
-templates = Jinja2Templates(directory=f"{config.webui_path}/template")
+templates = Jinja2Templates(directory=f"{config.webui_path}/dynamic")
+
 
 
 # 메인 페이지
 @app.get('/')
-async def root(request: Request, id: str = None):
-    nickname_id = id
-    return templates.TemplateResponse('main.html', {"request": request, "assistant_prompt": config.assistant_prompt , "client_ip": request.client.host})
-
+async def root(request: Request):
+    return templates.TemplateResponse('main.html', {"request": request})
 
 @app.get('/docs')
 async def license(request: Request):
     return templates.TemplateResponse('infomation.html', {"request": request})
-
-
